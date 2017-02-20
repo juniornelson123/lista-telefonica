@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html ng-app="lista">
 <head>
+	<meta charset="utf-8">
 	<title>Lista Telefonica</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script type="text/javascript" src="js/config/angular.min.js"></script>
 	<script type="text/javascript" src="js/config/angular-messages.min.js"></script>
+	<script type="text/javascript" src="js/config/angular-locale_pt-br.js"></script>
 	<script type="text/javascript">
 		//criando modulo
 		angular.module("lista",["ngMessages"]);
 
 		//instanciando modulo & criando controller
-		angular.module("lista").controller('listaTelefonicaController', function($scope){
+		angular.module("lista").controller('listaTelefonicaController', function($scope,$http){
 			$scope.app = "Lista Telefonica"
 
-			$scope.contatos = [
-				{ nome: "Nelson Junior", telefone: "99562-5927", cor: "red"},
-				{ nome: "Arnaldo Jose", telefone: "98562-2322", cor: "green"},
-				{ nome: "Fernando Rodrigues", telefone: "98432-4320", cor: "yellow"}
-			]
+			$scope.contatos = []
+				
 
 			$scope.operadoras = [
-				{ nome: "Oi", codigo: "15", categoria: "Celular"},
-				{ nome: "Tim", codigo: "21", categoria: "Celular"},
-				{ nome: "Claro", codigo: "32", categoria: "Celular"},
-				{ nome: "GMT", codigo: "34", categoria: "Fixo"},
-				{ nome: "Embratel", codigo: "51", categoria: "Fixo"}
+				{ nome: "Oi", codigo: "15", categoria: "Celular", preco: 2},
+				{ nome: "Tim", codigo: "21", categoria: "Celular", preco: 3},
+				{ nome: "Claro", codigo: "32", categoria: "Celular", preco: 5},
+				{ nome: "GMT", codigo: "34", categoria: "Fixo", preco: 1},
+				{ nome: "Embratel", codigo: "51", categoria: "Fixo", preco: 6}
 			]
+
+			var carregarContatos = function(){
+				$http.get("ttp://api.postmon.com.br/v1/cep/64078300");
+			}
 
 			$scope.adicionaContato = function(contato){
 				$scope.contatos.push(angular.copy(contato));
@@ -45,6 +48,13 @@
 					return contato.selecionado;
 				});
 			}
+
+			$scope.ordenarPor = function(valor){
+				$scope.ordemBusca = valor;
+			}
+
+			carregarContatos();
+
 		});
 	</script>
 	<style type="text/css">
@@ -65,20 +75,21 @@
 	<div class="container" ng-controller="listaTelefonicaController">
 		<div class="jumbotron">
 			<h4>{{app}}</h4>
+			<input type="text" class="form-control" ng-model="criterioBusca" placeholder="O que você esta procurando?" name="busca">
 			<table class="table table-stripped">
 				<tr>
 					<th style="text-align:center;">Selecionar</th>
-					<th style="text-align:center;">Nome</th>
-					<th style="text-align:center;">Telefone</th>
+					<th style="text-align:center;"><a href="" ng-click="ordenarPor('nome')">Nome</a></th>
+					<th style="text-align:center;"><a href="" ng-click="ordenarPor('telefone')">Telefone</a></th>
 					<th style="text-align:center;">Operadora</th>
-					<th style="text-align:center;"></th>
+					<th style="text-align:center;">Data</th>
 				</tr>
-				<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos">
+				<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos | filter:criterioBusca | orderBy:ordemBusca">
 					<td><input type="checkbox" ng-model="contato.selecionado" name="selecionado"></td>
-					<td>{{contato.nome}}</td>
+					<td>{{contato.nome | uppercase}}</td>
 					<td>{{contato.telefone}}</td>
-					<td>{{contato.operadora.nome}}</td>
-					<td style="text-align: center;"><div style="width: 20px; height: 20px;" ng-style="{'background-color': contato.cor}"></div></td>
+					<td>{{contato.operadora.nome | lowercase}}</td>
+					<td>{{contato.data | date:'dd/MM/yyyy'}}</td>	
 				</tr>
 			</table>
 			<hr>
@@ -90,11 +101,11 @@
 					<input type="text" ng-model="contato.telefone" ng-pattern="/^\d{4,5}-\d{4}$/" required name=telefone class="form-control" placeholder="Telefone">
 				</div>
 				<div class="form-group">
-					<select class="form-control" required ng-model="contato.operadora" ng-options="operadora.nome group by operadora.categoria for operadora in operadoras">
+					<select class="form-control" required ng-model="contato.operadora" ng-options="operadora.nome + '(' + (operadora.preco | currency) + ')' for operadora in operadoras">
 						<option value="">Selecione operadora</option>
 					</select>
 				</div>
-				
+
 				<div class="alert alert-danger" ng-show="form.nome.$error.required && form.nome.$dirty">
 					Por favor preencha o campo nome
 				</div>
