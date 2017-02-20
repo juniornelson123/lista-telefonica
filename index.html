@@ -27,7 +27,13 @@
 			]
 
 			var carregarContatos = function(){
-				$http.get("ttp://api.postmon.com.br/v1/cep/64078300");
+				$http.get("http://127.0.0.1:3000/contatos.json").then(function(data) {
+    				if(data.status == 200){
+						$scope.contatos = data.data
+						console.log($scope.contatos)
+					}
+ 				 })
+				
 			}
 
 			$scope.adicionaContato = function(contato){
@@ -52,7 +58,7 @@
 			$scope.ordenarPor = function(valor){
 				$scope.ordemBusca = valor;
 			}
-
+				
 			carregarContatos();
 
 		});
@@ -89,7 +95,7 @@
 					<td>{{contato.nome | uppercase}}</td>
 					<td>{{contato.telefone}}</td>
 					<td>{{contato.operadora.nome | lowercase}}</td>
-					<td>{{contato.data | date:'dd/MM/yyyy'}}</td>	
+					<td>{{contato.date | date:'dd/MM/yyyy'}}</td>	
 				</tr>
 			</table>
 			<hr>
