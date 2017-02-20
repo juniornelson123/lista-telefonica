@@ -18,27 +18,42 @@
 			$scope.contatos = []
 				
 
-			$scope.operadoras = [
-				{ nome: "Oi", codigo: "15", categoria: "Celular", preco: 2},
-				{ nome: "Tim", codigo: "21", categoria: "Celular", preco: 3},
-				{ nome: "Claro", codigo: "32", categoria: "Celular", preco: 5},
-				{ nome: "GMT", codigo: "34", categoria: "Fixo", preco: 1},
-				{ nome: "Embratel", codigo: "51", categoria: "Fixo", preco: 6}
-			]
+			$scope.operadoras = []
 
 			var carregarContatos = function(){
 				$http.get("http://127.0.0.1:3000/contatos.json").then(function(data) {
     				if(data.status == 200){
 						$scope.contatos = data.data
-						console.log($scope.contatos)
+					}
+ 				 })
+				
+			}
+
+
+			var carregarOperadoras = function(){
+				$http.get("http://127.0.0.1:3000/operadoras.json").then(function(data) {
+    				if(data.status == 200){
+						$scope.operadoras = data.data
+						
 					}
  				 })
 				
 			}
 
 			$scope.adicionaContato = function(contato){
-				$scope.contatos.push(angular.copy(contato));
-
+				
+				//$scope.contatos.push(angular.copy(contato));
+				//contato.operadora = ""
+				contato.operadora_id = contato.operadora.id
+				 $http.post("http://127.0.0.1:3000/contatos.json", {'contato' : contato }).then(
+				       function(response){
+				         carregarContatos()
+				       }, 
+				       function(response){
+				         
+				       }
+				    );
+				
 				delete $scope.contato
 				$scope.form.$setPristine()
 			}
@@ -60,6 +75,7 @@
 			}
 				
 			carregarContatos();
+			carregarOperadoras();
 
 		});
 	</script>
@@ -107,7 +123,7 @@
 					<input type="text" ng-model="contato.telefone" ng-pattern="/^\d{4,5}-\d{4}$/" required name=telefone class="form-control" placeholder="Telefone">
 				</div>
 				<div class="form-group">
-					<select class="form-control" required ng-model="contato.operadora" ng-options="operadora.nome + '(' + (operadora.preco | currency) + ')' for operadora in operadoras">
+					<select class="form-control" required ng-model="contato.operadora" ng-options="operadora.nome + '(' + (operadora.categoria | lowercase) + ')' for operadora in operadoras">
 						<option value="">Selecione operadora</option>
 					</select>
 				</div>
