@@ -1,5 +1,5 @@
 //instanciando modulo & criando controller
-		angular.module("lista").controller('listaTelefonicaController', function($scope,$http){
+		angular.module("lista").controller('listaTelefonicaController', function($scope,contatosApi, operadorasApi){
 			$scope.app = "Lista Telefonica"
 
 			$scope.contatos = []
@@ -8,7 +8,7 @@
 			$scope.operadoras = []
 
 			var carregarContatos = function(){
-				$http.get("http://127.0.0.1:3000/contatos.json").then(function(data) {
+				contatosApi.getContatos().then(function(data) {
     				if(data.status == 200){
 						$scope.contatos = data.data
 					}
@@ -20,7 +20,7 @@
 
 
 			var carregarOperadoras = function(){
-				$http.get("http://127.0.0.1:3000/operadoras.json").then(function(data) {
+				operadorasApi.getOperadora().then(function(data) {
     				if(data.status == 200){
 						$scope.operadoras = data.data
 						
@@ -37,7 +37,7 @@
 				//$scope.contatos.push(angular.copy(contato));
 				//contato.operadora = ""
 				contato.operadora_id = contato.operadora.id
-				 $http.post("http://127.0.0.1:3000/contatos.json", {'contato' : contato }).then(
+				 contatosApi.saveContatos(contato).then(
 				       function(response){
 				         carregarContatos()
 				       }, 
