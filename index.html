@@ -13,6 +13,8 @@
 	<script type="text/javascript" src="js/controller/listaTelefonicaController.js"></script>
 	<script type="text/javascript" src="js/service/contatosApiService.js"></script>
 	<script type="text/javascript" src="js/service/operadorasApiService.js"></script>
+	<script type="text/javascript" src="js/directive/uiAlertDirective.js"></script>
+	<script type="text/javascript" src="js/directive/uiFoneDirective.js"></script>
 	
 	<style type="text/css">
 		
@@ -22,7 +24,11 @@
 	<div class="container" ng-controller="listaTelefonicaController">
 		<div class="jumbotron">
 			<h4>{{app}}</h4>
-			<span>{{messageError}}</span>
+			
+			<ui-alert title="Opa! aconteceu alguma coisa">
+				{{messageError}}
+			</ui-alert>
+			
 			<input type="text" class="form-control" ng-model="criterioBusca" placeholder="O que você esta procurando?" name="busca">
 			<table class="table table-stripped">
 				<tr>
@@ -46,7 +52,7 @@
 					<input type="text" ng-model="contato.nome" ng-minlength="5" required name="nome" class="form-control" placeholder="Nome">
 				</div>
 				<div class="form-group">	
-					<input type="text" ng-model="contato.telefone" ng-pattern="/^\d{4,5}-\d{4}$/" required name=telefone class="form-control" placeholder="Telefone">
+					<input type="text" ng-model="contato.telefone" ng-pattern="/^\d{4,5}-\d{4}$/" required name=telefone class="form-control" placeholder="Telefone" ui-fone>
 				</div>
 				<div class="form-group">
 					<select class="form-control" required ng-model="contato.operadora" ng-options="operadora.nome + '(' + (operadora.categoria | lowercase) + ')' for operadora in operadoras">
