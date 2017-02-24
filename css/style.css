@@ -28,3 +28,17 @@
 .ui-alert-message{
 	color: #ff0000;
 }
+
+.ui-accordion-title{
+	background-color: #ccc;
+	padding: 10px;
+	margin-top: 10px;
+	border-radius: 8px;
+}
+
+.ui-accordion-content{
+	color: #999;
+	background-color: #fff;
+	margin-bottom: 10px;
+	padding: 10px;
+}

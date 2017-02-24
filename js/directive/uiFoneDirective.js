@@ -17,9 +17,10 @@ angular.module("lista").directive('uiFone',function(){
 		link: function($scope, $element, $attr, controller) {
 			var _formatNumber = function(number){
 				fone = number.replace("/[^0-9]+g/","");
-				if (fone.length > 4) {
-					fone = fone.substring(0,4)+"-"+fone.substring(4);
+				if (fone.length == 5) {
+					fone = fone.substring(0,5)+"-"+fone.substring(4);
 				}
+
 
 				return fone;
 			} 

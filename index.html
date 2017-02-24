@@ -15,6 +15,7 @@
 	<script type="text/javascript" src="js/service/operadorasApiService.js"></script>
 	<script type="text/javascript" src="js/directive/uiAlertDirective.js"></script>
 	<script type="text/javascript" src="js/directive/uiFoneDirective.js"></script>
+	<script type="text/javascript" src="js/directive/uiAccordionDirective.js"></script>
 	
 	<style type="text/css">
 		
@@ -23,9 +24,30 @@
 <body>
 	<div class="container" ng-controller="listaTelefonicaController">
 		<div class="jumbotron">
+			
+			<ui-accordions>
+				<ui-accordion title="Accordion1">
+					asdasdasdsadasdasdsadaasdasdjsajdlkasjdkljsa
+					ldjsklajdlksajdklsjaldkjsakldjsalkdjsklajdklsajdklsjakldjsakldjsklajdlsajdkljsakldjlskajdlksajdklas
+					jkdljaskldjaslkdjlksajdlksajdklsajdklsjakld
+					jsakldjkslajdklsajkdlsjalkdjsakldjsklajdklas
+					jdlsajslkajdlskajlskadjlksajdklsajdklsajkdj
+					sakdjasldjlasjdkljaslkdjsakjdklsajdklasjdlkasj
+				</ui-accordion>
+
+				<ui-accordion title="Accordion2">
+					asdasdasdsadasdasdsadaasdasdjsajdlkasjdkljsa
+					ldjsklajdlksajdklsjaldkjsakldjsalkdjsklajdklsajdklsjakldjsakldjsklajdlsajdkljsakldjlskajdlksajdklas
+					jkdljaskldjaslkdjlksajdlksajdklsajdklsjakld
+					jsakldjkslajdklsajkdlsjalkdjsakldjsklajdklas
+					jdlsajslkajdlskajlskadjlksajdklsajdklsajkdj
+					sakdjasldjlasjdkljaslkdjsakjdklsajdklasjdlkasj
+				</ui-accordion>
+			</ui-accordions>
+
 			<h4>{{app}}</h4>
 			
-			<ui-alert title="Opa! aconteceu alguma coisa">
+			<ui-alert ng-show="{{messageError}}" title="Opa! aconteceu alguma coisa">
 				{{messageError}}
 			</ui-alert>
 			
