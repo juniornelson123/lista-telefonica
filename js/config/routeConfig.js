@@ -9,6 +9,11 @@ angular.module("lista").config(function($routeProvider) {
 		controller: "novoContatoController"
 	});
 
+	$routeProvider.when("/detalheContato/:id",{
+		templateUrl: "/views/detalheContato.html",
+		controller: "detalheContato"
+	});
+
 	$routeProvider.when("/error",{
 		templateUrl: "/views/error.html"
 	});

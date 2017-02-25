@@ -38,7 +38,7 @@
 				</tr>
 				<tr ng-class="{selecionado: contato.selecionado}" ng-repeat="contato in contatos | filter:criterioBusca | orderBy:ordemBusca">
 					<td><input type="checkbox" ng-model="contato.selecionado" name="selecionado"></td>
-					<td>{{contato.nome | uppercase}}</td>
+					<td><a href="/index.html#/detalheContato/"+contato.id>{{contato.nome | uppercase}}</a></td>
 					<td>{{contato.telefone}}</td>
 					<td>{{contato.operadora.nome | lowercase}}</td>
 					<td>{{contato.date | date:'dd/MM/yyyy'}}</td>	
