@@ -19,11 +19,16 @@
 	<script type="text/javascript" src="/js/directive/uiAlertDirective.js"></script>
 	<script type="text/javascript" src="/js/directive/uiFoneDirective.js"></script>
 	<script type="text/javascript" src="/js/directive/uiAccordionDirective.js"></script>
-	<script src="/js/config/interceptorsConfig.js"></script>
 	<script src="/js/interceptors/errorInterceptor.js"></script>
+	<script src="/js/interceptors/loadingInterceptor.js"></script>
+	<script src="/js/config/interceptorsConfig.js"></script>
 	
 </head>
 <body>
-	<div ng-view></div>
+
+	<div class="jumbotron" ng-show="loading">
+		<h5>Carregando, aguarde por favor...</h5>
+	</div>
+	<div ng-view ng-hide="loading"></div>
 </body>
 </html>
