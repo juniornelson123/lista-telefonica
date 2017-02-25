@@ -1,5 +1,5 @@
 //instanciando modulo & criando controller
-		angular.module("lista").controller('listaTelefonicaController', function($scope,contatosApi, operadorasApi){
+		angular.module("lista").controller('listaTelefonicaController', function($scope, contatosApi, operadorasApi){
 			$scope.app = "Lista Telefonica"
 
 			$scope.contatos = []
@@ -15,6 +15,7 @@
  				 },function (data) {
  				 	$scope.messageError = "Aconteceu um erro ao carregar contatos"
  				 })
+				
 				
 			}
 

@@ -11,7 +11,8 @@ angular.module("lista").directive('uiAccordions', function(){
 
 			this.closeAll = function(){
 				accordions.forEach(function(accordion){
-					accordion.isOpened = false;	
+					accordion.isOpened = false;
+						
 				});
 			}
 		}
@@ -30,7 +31,9 @@ angular.module("lista").directive('uiAccordion', function(){
 		link: function($scope, $element, $attrs, controller){
 			controller.registerAccordion($scope)
 			$scope.open = function(){
-				controller.closeAll();
+				
+				//controller.closeAll();
+
 				$scope.isOpened = !$scope.isOpened
 			}
 		}

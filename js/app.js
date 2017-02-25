@@ -1,1 +1,1 @@
-angular.module("lista",["ngMessages"]);
+angular.module("lista",["ngMessages", "ngRoute"]);
